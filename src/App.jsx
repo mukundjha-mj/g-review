@@ -20,10 +20,11 @@ function Generator() {
     setError('')
     let url; try { url = new URL(reviewUrl.trim()) } catch { return setError('Paste a valid Google review link.') }
     if (url.protocol !== 'https:') return setError('Use an https:// link.')
+    if (url.hostname === 'maps.app.goo.gl') return setError('Use the direct Google review link from Ask for reviews, not a maps.app.goo.gl short link.')
     const landing = new URL(location.href); landing.search = ''; landing.searchParams.set('review', url.href)
     setQrUrl(`https://api.qrserver.com/v1/create-qr-code/?size=500x500&margin=12&data=${encodeURIComponent(landing.href)}`)
   }
-  return <main className="page"><section className="card"><h1>Google Review QR Generator</h1><p className="subtitle">Paste your Google review link to create a QR code.</p><label>Google review or business link<input value={reviewUrl} onChange={(event) => setReviewUrl(event.target.value)} type="url" placeholder="https://maps.app.goo.gl/..." /></label><button className="primary" onClick={generate}>Generate QR Code</button><p className="error" role="alert">{error}</p>{qrUrl && <section className="result"><h2>Scan to leave a review</h2><img src={qrUrl} alt="Review QR code"/><button className="copy" onClick={() => window.print()}>Print QR Code</button></section>}</section></main>
+  return <main className="page"><section className="card"><h1>Google Review QR Generator</h1><p className="subtitle">Paste your Google review link to create a QR code.</p><label>Direct Google review link<input value={reviewUrl} onChange={(event) => setReviewUrl(event.target.value)} type="url" placeholder="https://search.google.com/local/writereview?placeid=..." /></label><button className="primary" onClick={generate}>Generate QR Code</button><p className="error" role="alert">{error}</p>{qrUrl && <section className="result"><h2>Scan to leave a review</h2><img src={qrUrl} alt="Review QR code"/><button className="copy" onClick={() => window.print()}>Print QR Code</button></section>}</section></main>
 }
 
 export default function App() {
