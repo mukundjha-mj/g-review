@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Us ⭐ - Urban Company City Office</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 35px 25px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .google-logo {
+            width: 45px;
+            height: 45px;
+            margin-bottom: 12px;
+        }
+
+        .business-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .stars-container {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .star {
+            font-size: 2.5rem;
+            color: #FBBC04;
+            text-shadow: 0 0 8px rgba(251, 188, 4, 0.3);
+            animation: starPop 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        .star:nth-child(1) { animation-delay: 0.1s; }
+        .star:nth-child(2) { animation-delay: 0.2s; }
+        .star:nth-child(3) { animation-delay: 0.3s; }
+        .star:nth-child(4) { animation-delay: 0.4s; }
+        .star:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes starPop {
+            0% { opacity: 0; transform: scale(0) rotate(-180deg); }
+            70% { transform: scale(1.2) rotate(5deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        .message-section {
+            margin-bottom: 20px;
+        }
+
+        .message-label {
+            font-size: 0.8rem;
+            color: #4285F4;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .message-box {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .message-box.copied {
+            border-color: #34A853;
+            background: #f0fff4;
+        }
+
+        .message-text {
+            font-size: 0.88rem;
+            color: #333;
+            line-height: 1.5;
+            user-select: all;
+            -webkit-user-select: all;
+        }
+
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f0f7ff;
+            border: 2px solid #4285F4;
+            color: #4285F4;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .copy-btn.copied {
+            background: #34A853;
+            border-color: #34A853;
+            color: white;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #4285F4, #34A853);
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 600;
+            padding: 16px 30px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.97);
+        }
+
+        .steps-hint {
+            margin-top: 18px;
+            background: #fffbf0;
+            border: 1px solid #FBBC04;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .steps-hint p {
+            font-size: 0.8rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .steps-hint strong {
+            color: #333;
+        }
+
+        .step-num {
+            display: inline-block;
+            background: #4285F4;
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            line-height: 18px;
+            text-align: center;
+            margin-right: 4px;
+            font-weight: 700;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: #34A853;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(52, 168, 83, 0.4);
+            transition: transform 0.4s ease;
+            z-index: 9999;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .or-divider {
+            color: #999;
+            font-size: 0.8rem;
+            margin: 10px 0;
+        }
+
+        .manual-hint {
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="toast" id="toast">✅ Message copied! Now paste it on Google</div>
+
+    <div class="container">
+        <svg class="google-logo" viewBox="0 0 48 48">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+
+        <h1 class="business-name" id="businessName">Urban Company City Office</h1>
+        <p class="subtitle">Thank you! Help us with a quick 5-star review ⭐</p>
+
+        <div class="stars-container">
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+        </div>
+
+        <!-- Review message visible & selectable -->
+        <div class="message-section">
+            <p class="message-label">📋 Your review message:</p>
+            <div class="message-box" id="messageBox">
+                <p class="message-text" id="reviewMessage">Excellent service! Very professional and timely. The team was courteous and did a fantastic job. Highly recommend Urban Company for anyone looking for quality service. 👍</p>
+            </div>
+            <p class="manual-hint">👆 You can also tap & hold the text to select & copy manually</p>
+        </div>
+
+        <!-- Step 1: Copy button -->
+        <button class="copy-btn" id="copyBtn" onclick="copyMessage()">
+            <span id="copyIcon">📋</span> <span id="copyText">Tap to Copy Message</span>
+        </button>
+
+        <p class="or-divider">then</p>
+
+        <!-- Step 2: Go to Google Review -->
+        <a href="https://search.google.com/local/writereview?placeid=ChIJwcYbOADlDDkRYcVCmvGzpJw" 
+           class="submit-btn" 
+           id="submitBtn">
+            ⭐ Open Google Review & Paste
+        </a>
+
+        <!-- Steps reminder -->
+        <div class="steps-hint">
+            <p>
+                <span class="step-num">1</span> Tap <strong>"Copy Message"</strong> above<br>
+                <span class="step-num">2</span> Tap <strong>"Open Google Review"</strong><br>
+                <span class="step-num">3</span> Select <strong>5 stars</strong> ⭐⭐⭐⭐⭐<br>
+                <span class="step-num">4</span> Tap the text box → <strong>Paste</strong><br>
+                <span class="step-num">5</span> Hit <strong>Post</strong> — Done! 🎉
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const pageParams = new URLSearchParams(window.location.search);
+        const suppliedBusinessName = pageParams.get('business');
+        const suppliedReviewUrl = pageParams.get('review');
+
+        if (suppliedBusinessName) {
+            document.getElementById('businessName').textContent = suppliedBusinessName;
+        }
+
+        // The generator stores the owner's Google link in the QR code query string.
+        // Only accept secure links before using it as the button destination.
+        if (suppliedReviewUrl) {
+            try {
+                const parsedReviewUrl = new URL(suppliedReviewUrl);
+                if (parsedReviewUrl.protocol === 'https:') {
+                    document.getElementById('submitBtn').href = parsedReviewUrl.href;
+                }
+            } catch (error) {
+                // Keep the configured fallback link if the QR parameter is invalid.
+            }
+        }
+
+        const reviewMessage = document.getElementById('reviewMessage').textContent;
+        let messageCopied = false;
+
+        // Copy on button tap (works on mobile - user gesture triggers clipboard access)
+        async function copyMessage() {
+            try {
+                await navigator.clipboard.writeText(reviewMessage);
+                showCopiedState();
+            } catch (err) {
+                // Fallback for browsers that block clipboard API
+                fallbackCopy();
+            }
+        }
+
+        function fallbackCopy() {
+            const textarea = document.createElement('textarea');
+            textarea.value = reviewMessage;
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-9999px';
+            textarea.style.top = '-9999px';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+
+            try {
+                const success = document.execCommand('copy');
+                if (success) {
+                    showCopiedState();
+                } else {
+                    showManualCopyHint();
+                }
+            } catch (err) {
+                showManualCopyHint();
+            }
+
+            document.body.removeChild(textarea);
+        }
+
+        function showCopiedState() {
+            messageCopied = true;
+
+            // Update button
+            const btn = document.getElementById('copyBtn');
+            btn.classList.add('copied');
+            document.getElementById('copyIcon').textContent = '✅';
+            document.getElementById('copyText').textContent = 'Copied! Now tap below';
+
+            // Update message box border
+            document.getElementById('messageBox').classList.add('copied');
+
+            // Show toast
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function showManualCopyHint() {
+            // If both methods fail, tell user to manually select & copy
+            const btn = document.getElementById('copyBtn');
+            btn.innerHTML = '⚠️ <span>Tap & hold message above to copy</span>';
+            btn.style.borderColor = '#FBBC04';
+            btn.style.color = '#F57C00';
+            btn.style.background = '#fffbf0';
+        }
+
+        // Also try copy when "Open Google Review" is tapped
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            if (!messageCopied) {
+                try {
+                    navigator.clipboard.writeText(reviewMessage);
+                } catch(e) {}
+            }
+        });
+    </script>
+</body>
+</html>
